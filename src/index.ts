@@ -1,1 +1,2 @@
-console.log('Hello world!');
+export * from './addAuthorFields';
+export * from './PluginConfig';
