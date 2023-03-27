@@ -1,21 +1,12 @@
 name: Publish Package to npmjs
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Environment setup (Beta)
-        if: endsWith(github.ref, '/develop')
-        run: |
-          echo "IS_PRERELEASE=true" >> $GITHUB_ENV
-      - name: Environment setup (Prod)
-        if: endsWith(github.ref, '/main')
-        run: |
-          echo "IS_PRERELEASE=false" >> $GITHUB_ENV
-
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -30,20 +21,14 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --no-fund
       - run: npm run build
 
-      - run: npm publish --access public --tag next
-        if: endsWith(github.ref, '/develop')
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm publish --access public
-        if: endsWith(github.ref, '/main')
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
-        if: endsWith(github.ref, '/main')
         with:
           name: v${{ steps.package-version.outputs.current-version }}
           tag_name: v${{ steps.package-version.outputs.current-version }}
           draft: false
-          prerelease: ${{ env.IS_PRERELEASE }}
+          prerelease: false

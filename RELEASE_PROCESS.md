@@ -2,7 +2,11 @@
 
 ## Beta
 
-Push/merge to `develop` branch will trigger CI/CD workflow, which publishes `@boomworks/payload-plugin-author-fields@next`
+```sh
+npm version prerelease --preid=next
+npm run build
+npm publish --access public --tag next
+```
 
 ## Production
 
