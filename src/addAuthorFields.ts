@@ -35,8 +35,8 @@ export const addAuthorFields =
         .forEach((x) => {
           x.hooks = {
             ...x.hooks,
-            afterChange: [
-              ...((x.hooks && x.hooks.afterChange) || []),
+            beforeChange: [
+              ...((x.hooks && x.hooks.beforeChange) || []),
               authorHook(mergedConfig.updatedByFieldName, usersSlug),
             ],
           };
@@ -63,8 +63,8 @@ export const addAuthorFields =
         .forEach((x) => {
           x.hooks = {
             ...x.hooks,
-            afterChange: [
-              ...((x.hooks && x.hooks.afterChange) || []),
+            beforeChange: [
+              ...((x.hooks && x.hooks.beforeChange) || []),
               authorHook(mergedConfig.updatedByFieldName, usersSlug),
             ],
           };

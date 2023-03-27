@@ -1,17 +1,25 @@
 import { PayloadRequest } from 'payload/types';
 
 export const authorHook = (
-  userSlug: string,
-  updatedByFieldName: string
+  updatedByFieldName: string,
+  userSlug: string
 ): any => {
-  return async (args: { doc: any; req: PayloadRequest; operation: string }) => {
-    if (args.operation === 'update' && args.req.user !== undefined) {
-      args.doc[updatedByFieldName] = {
+  return async (args: {
+    data: any;
+    req: PayloadRequest;
+    operation: string;
+  }) => {
+    if (
+      args.operation === 'update' &&
+      args.data !== undefined &&
+      args.req.user !== undefined
+    ) {
+      args.data[updatedByFieldName] = {
         relationTo: userSlug,
         value: args.req.user.id,
       };
     }
 
-    return args.doc;
+    return args.data;
   };
 };
