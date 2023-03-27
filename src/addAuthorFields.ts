@@ -12,6 +12,8 @@ const defaultConfig: Required<PluginConfig> = {
   excludedGlobals: [],
   createdByFieldName: 'createdBy',
   updatedByFieldName: 'updatedBy',
+  createdByLabel: 'Created By',
+  updatedByLabel: 'Updated By',
   showInSidebar: true,
   fieldAccess: fieldReadAccess,
 };
@@ -45,11 +47,13 @@ export const addAuthorFields =
             ...x.fields,
             createField(
               mergedConfig.createdByFieldName,
+              mergedConfig.createdByLabel,
               usersSlug,
               mergedConfig
             ),
             createField(
               mergedConfig.updatedByFieldName,
+              mergedConfig.updatedByLabel,
               usersSlug,
               mergedConfig
             ),
@@ -73,11 +77,13 @@ export const addAuthorFields =
             ...x.fields,
             createField(
               mergedConfig.createdByFieldName,
+              mergedConfig.createdByLabel,
               usersSlug,
               mergedConfig
             ),
             createField(
               mergedConfig.updatedByFieldName,
+              mergedConfig.updatedByLabel,
               usersSlug,
               mergedConfig
             ),
@@ -90,11 +96,13 @@ export const addAuthorFields =
 
 const createField = (
   name: string,
+  label: string,
   usersSlug: string,
   pluginConfig: PluginConfig
 ): Field => {
   return {
     name: name,
+    label: label,
     type: 'relationship',
     relationTo: [usersSlug],
     defaultValue: (args: any) =>
