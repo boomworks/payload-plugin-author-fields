@@ -1,0 +1,28 @@
+{
+  "name": "@boomworks/payload-plugin-author-fields",
+  "version": "1.0.0",
+  "description": "Payload CMS plugin to add created & updated by fields",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boomworks/payload-plugin-author-fields.git"
+  },
+  "keywords": [
+    "payload-plugin"
+  ],
+  "author": "Lindsay Evans <lindsay.evans@boomworks.com.au>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boomworks/payload-plugin-author-fields/issues"
+  },
+  "homepage": "https://github.com/boomworks/payload-plugin-author-fields#readme",
+  "devDependencies": {
+    "payload": "^1.6.26",
+    "typescript": "^5.0.2"
+  }
+}
