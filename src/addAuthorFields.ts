@@ -108,21 +108,30 @@ export const addAuthorFields =
 const createField = (
   slug: string,
   name: string,
-  label: string,
+  label: PluginConfig['createdByLabel'] | PluginConfig['updatedByLabel'],
   editable:
     | PluginConfig['createdByFieldEditable']
     | PluginConfig['updatedByFieldEditable'],
   usersSlug: string,
   pluginConfig: PluginConfig
 ): Field => {
-  let isEditable = editable;
+  let fieldLabel: string;
+  if ((label as Function).call) {
+    fieldLabel = (label as Function).call({}, slug) as string;
+  } else {
+    fieldLabel = label as string;
+  }
+
+  let isEditable: boolean;
   if ((editable as Function).call) {
-    isEditable = (editable as Function).call({}, slug);
+    isEditable = (editable as Function).call({}, slug) as boolean;
+  } else {
+    isEditable = editable as boolean;
   }
 
   return {
     name: name,
-    label: label,
+    label: fieldLabel,
     type: 'relationship',
     relationTo: [usersSlug],
     defaultValue: (args: any) =>
