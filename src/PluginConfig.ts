@@ -19,6 +19,12 @@ export interface PluginConfig {
   /** Label for the updated by field, default: `Updated By` */
   updatedByLabel?: string;
 
+  /** Whether the created by field is editable, default: false */
+  createdByFieldEditable?: boolean | ((slug: string) => boolean);
+
+  /** Whether the updated by field is editable, default: false */
+  updatedByFieldEditable?: boolean | ((slug: string) => boolean);
+
   /** Show readonly created & updated by fields in sidebar, default: `true` */
   showInSidebar?: boolean;
 

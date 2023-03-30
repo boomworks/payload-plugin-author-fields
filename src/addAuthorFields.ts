@@ -14,6 +14,8 @@ const defaultConfig: Required<PluginConfig> = {
   updatedByFieldName: 'updatedBy',
   createdByLabel: 'Created By',
   updatedByLabel: 'Updated By',
+  createdByFieldEditable: false,
+  updatedByFieldEditable: false,
   showInSidebar: true,
   fieldAccess: fieldReadAccess,
 };
@@ -46,14 +48,18 @@ export const addAuthorFields =
           x.fields = [
             ...x.fields,
             createField(
+              x.slug,
               mergedConfig.createdByFieldName,
               mergedConfig.createdByLabel,
+              mergedConfig.createdByFieldEditable,
               usersSlug,
               mergedConfig
             ),
             createField(
+              x.slug,
               mergedConfig.updatedByFieldName,
               mergedConfig.updatedByLabel,
+              mergedConfig.updatedByFieldEditable,
               usersSlug,
               mergedConfig
             ),
@@ -76,14 +82,18 @@ export const addAuthorFields =
           x.fields = [
             ...x.fields,
             createField(
+              x.slug,
               mergedConfig.createdByFieldName,
               mergedConfig.createdByLabel,
+              mergedConfig.createdByFieldEditable,
               usersSlug,
               mergedConfig
             ),
             createField(
+              x.slug,
               mergedConfig.updatedByFieldName,
               mergedConfig.updatedByLabel,
+              mergedConfig.updatedByFieldEditable,
               usersSlug,
               mergedConfig
             ),
@@ -94,12 +104,22 @@ export const addAuthorFields =
     return config;
   };
 
+// TODO: Create typed args
 const createField = (
+  slug: string,
   name: string,
   label: string,
+  editable:
+    | PluginConfig['createdByFieldEditable']
+    | PluginConfig['updatedByFieldEditable'],
   usersSlug: string,
   pluginConfig: PluginConfig
 ): Field => {
+  let isEditable = editable;
+  if ((editable as Function).call) {
+    isEditable = (editable as Function).call({}, slug);
+  }
+
   return {
     name: name,
     label: label,
@@ -114,7 +134,7 @@ const createField = (
         : undefined,
     admin: {
       hidden: pluginConfig.showInSidebar ? !pluginConfig.showInSidebar : false,
-      readOnly: true,
+      readOnly: !isEditable,
       position: 'sidebar',
     },
     access: {
