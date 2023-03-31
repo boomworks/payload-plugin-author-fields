@@ -43,6 +43,8 @@ export default buildConfig({
 | `excludedGlobals: string[]`     | Array of global slugs to exclude                                         | `[]`            |
 | `createdByFieldName: string`    | Name of the created by field                                             | `createdBy`     |
 | `updatedByFieldName: string`    | Name of the updated by field                                             | `updatedBy`     |
+| `createdByLabel: string`        | Label for the created by field                                           | `Created By`    |
+| `updatedByLabel: string`        | Label for the updated by field                                           | `Updated By`    |
 | `showInSidebar: boolean`        | Show readonly created & updated by fields in sidebar                     | `true`          |
 | `fieldAccess: FieldAccess`      | Function that determines read access to the createdBy & updatedBy fields | `Boolean(user)` |
 
