@@ -14,10 +14,16 @@ export interface PluginConfig {
   updatedByFieldName?: string;
 
   /** Label for the created by field, default: `Created By` */
-  createdByLabel?: string | ((slug: string, defaultLabel: string) => string);
+  createdByLabel?:
+    | string
+    | Record<string, string>
+    | ((slug: string, defaultLabel: string) => string | Record<string, string>);
 
   /** Label for the updated by field, default: `Updated By` */
-  updatedByLabel?: string | ((slug: string, defaultLabel: string) => string);
+  updatedByLabel?:
+    | string
+    | Record<string, string>
+    | ((slug: string, defaultLabel: string) => string | Record<string, string>);
 
   /** Whether the created by field is editable, default: false */
   createdByFieldEditable?: boolean | ((slug: string) => boolean);

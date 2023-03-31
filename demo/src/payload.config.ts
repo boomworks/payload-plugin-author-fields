@@ -29,17 +29,31 @@ export default buildConfig({
     },
   },
   plugins: [
+    // addAuthorFields({
+    //   createdByFieldEditable: (slug: string) => {
+    //     return slug === 'posts';
+    //   },
+    //   createdByLabel: (slug: string) => {
+    //     if (slug === 'posts') {
+    //       return 'Posted By';
+    //     }
+
+    //     return 'Created By';
+    //   },
+    // }),
+    // i18n support for labels
     addAuthorFields({
       createdByFieldEditable: (slug: string) => {
         return slug === 'posts';
       },
       createdByLabel: (slug: string) => {
         if (slug === 'posts') {
-          return 'Posted By';
+          return { en: 'Posted By', es: 'Publicado por' };
         }
 
-        return 'Created By';
+        return { en: 'Created By', es: 'Creado por' };
       },
+      updatedByLabel: { en: 'Updated By', es: 'Actualizado por' },
     }),
   ],
   collections: [Categories, Posts, Tags, Users, Media],

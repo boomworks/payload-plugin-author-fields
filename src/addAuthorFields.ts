@@ -119,11 +119,11 @@ const createField = (
   usersSlug: string,
   pluginConfig: PluginConfig
 ): Field => {
-  let fieldLabel: string;
+  let fieldLabel: string | Record<string, string>;
   if ((label as Function).call) {
-    fieldLabel = (label as Function).call({}, slug) as string;
+    fieldLabel = (label as Function).call({}, slug);
   } else {
-    fieldLabel = label as string;
+    fieldLabel = label as string | Record<string, string>;
   }
 
   let isEditable: boolean;

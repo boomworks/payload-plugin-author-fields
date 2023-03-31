@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TextField } from 'payload/types';
-import { useField } from 'payload/components/forms';
+import { Label, useField } from 'payload/components/forms';
 import { useConfig } from 'payload/components/utilities';
 import {
   FieldType,
@@ -10,6 +10,8 @@ import {
 } from 'payload/dist/admin/components/forms/useField/types';
 
 import { PluginConfig } from '../PluginConfig';
+
+import './index.scss';
 
 type TextFieldWithProps = TextField & {
   path: string;
@@ -33,7 +35,7 @@ export const DisplayOnlyField: React.FC<
   const { value } = field;
 
   const config = useConfig();
-  const { t, i18n } = useTranslation('fields');
+  const { i18n } = useTranslation('fields');
 
   const {
     serverURL,
@@ -75,7 +77,8 @@ export const DisplayOnlyField: React.FC<
 
   return (
     <div className="display-only">
-      <div className="collection-edit__label">{label}</div>
+      {/* <div className="collection-edit__label">{label}</div> */}
+      <Label label={label} />
       <div>{userValue}</div>
     </div>
   );
