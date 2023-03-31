@@ -3,6 +3,10 @@ import { Field, FieldAccess, PayloadRequest } from 'payload/types';
 
 import { PluginConfig } from './PluginConfig';
 import { authorHook } from './authorHook';
+import {
+  DisplayOnlyField,
+  getDisplayOnlyField,
+} from './DisplayOnlyField/DisplayOnlyField';
 
 const fieldReadAccess: FieldAccess = (args: { req: PayloadRequest }) =>
   Boolean(args.req.user);
@@ -145,6 +149,9 @@ const createField = (
       hidden: pluginConfig.showInSidebar ? !pluginConfig.showInSidebar : false,
       readOnly: !isEditable,
       position: 'sidebar',
+      components: {
+        Field: (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
+      },
     },
     access: {
       read: pluginConfig.fieldAccess,
