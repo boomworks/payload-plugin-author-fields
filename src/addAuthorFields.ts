@@ -150,7 +150,9 @@ const createField = (
       readOnly: !isEditable,
       position: 'sidebar',
       components: {
-        Field: (props: any) => getDisplayOnlyField({ ...props }),
+        Field: isEditable
+          ? undefined
+          : (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
       },
     },
     access: {
