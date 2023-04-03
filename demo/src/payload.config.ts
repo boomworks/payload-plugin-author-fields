@@ -9,6 +9,34 @@ import Media from './collections/Media';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
+  plugins: [
+    addAuthorFields({
+      // Exclude some collections
+      excludedCollections: ['users', 'tags'],
+
+      // The 'Created By' field should be editable for posts
+      createdByFieldEditable: (slug: string) => slug === 'posts',
+
+      // Use a function to determine the 'Created By' label
+      createdByLabel: (slug: string) => {
+        if (slug === 'posts') {
+          return { en: 'Posted By', es: 'Publicado por' };
+        }
+
+        return { en: 'Created By', es: 'Creado por' };
+      },
+
+      // Internationalisation of labels is also supported
+      updatedByLabel: { en: 'Updated By', es: 'Actualizado por' },
+    }),
+  ],
+  collections: [Categories, Posts, Tags, Users, Media],
+  typescript: {
+    outputFile: path.resolve(__dirname, 'payload-types.ts'),
+  },
+  graphQL: {
+    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
+  },
   admin: {
     user: Users.slug,
     webpack: (config) => {
@@ -27,40 +55,5 @@ export default buildConfig({
 
       return newConfig;
     },
-  },
-  plugins: [
-    // addAuthorFields({
-    //   createdByFieldEditable: (slug: string) => {
-    //     return slug === 'posts';
-    //   },
-    //   createdByLabel: (slug: string) => {
-    //     if (slug === 'posts') {
-    //       return 'Posted By';
-    //     }
-
-    //     return 'Created By';
-    //   },
-    // }),
-    // i18n support for labels
-    addAuthorFields({
-      createdByFieldEditable: (slug: string) => {
-        return slug === 'posts';
-      },
-      createdByLabel: (slug: string) => {
-        if (slug === 'posts') {
-          return { en: 'Posted By', es: 'Publicado por' };
-        }
-
-        return { en: 'Created By', es: 'Creado por' };
-      },
-      updatedByLabel: { en: 'Updated By', es: 'Actualizado por' },
-    }),
-  ],
-  collections: [Categories, Posts, Tags, Users, Media],
-  typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
-  },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
 });

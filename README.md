@@ -28,25 +28,18 @@ export default buildConfig({
   // ...
   plugins: [
     addAuthorFields({
-      // See "Configuration options"
+      // See "Configuration"
     }),
   ],
   // ...
 });
 ```
 
-#### Configuration options
+#### Configuration
 
-| Property                        | Description                                                              | Default         |
-| ------------------------------- | ------------------------------------------------------------------------ | --------------- |
-| `excludedCollections: string[]` | Array of collection slugs to exclude                                     | `[]`            |
-| `excludedGlobals: string[]`     | Array of global slugs to exclude                                         | `[]`            |
-| `createdByFieldName: string`    | Name of the created by field                                             | `createdBy`     |
-| `updatedByFieldName: string`    | Name of the updated by field                                             | `updatedBy`     |
-| `createdByLabel: string`        | Label for the created by field                                           | `Created By`    |
-| `updatedByLabel: string`        | Label for the updated by field                                           | `Updated By`    |
-| `showInSidebar: boolean`        | Show readonly created & updated by fields in sidebar                     | `true`          |
-| `fieldAccess: FieldAccess`      | Function that determines read access to the createdBy & updatedBy fields | `Boolean(user)` |
+See [`PluginConfig`](./src/PluginConfig.ts) for all configuration options.
+
+The [`demo`](./demo/) directory contains a Payload app showing [a few examples](./demo/src/payload.config.ts#L13), including customising labels & i18n.
 
 ### Contributing
 
