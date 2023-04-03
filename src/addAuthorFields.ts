@@ -48,22 +48,22 @@ export const addAuthorFields =
 
           x.fields = [
             ...x.fields,
-            createField(
-              x.slug,
-              mergedConfig.createdByFieldName,
-              mergedConfig.createdByLabel,
-              mergedConfig.createdByFieldEditable,
+            createField({
+              slug: x.slug,
+              name: mergedConfig.createdByFieldName,
+              label: mergedConfig.createdByLabel,
+              editable: mergedConfig.createdByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
-            createField(
-              x.slug,
-              mergedConfig.updatedByFieldName,
-              mergedConfig.updatedByLabel,
-              mergedConfig.updatedByFieldEditable,
+              pluginConfig: mergedConfig,
+            }),
+            createField({
+              slug: x.slug,
+              name: mergedConfig.updatedByFieldName,
+              label: mergedConfig.updatedByLabel,
+              editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
+              pluginConfig: mergedConfig,
+            }),
           ];
         });
     }
@@ -82,22 +82,22 @@ export const addAuthorFields =
 
           x.fields = [
             ...x.fields,
-            createField(
-              x.slug,
-              mergedConfig.createdByFieldName,
-              mergedConfig.createdByLabel,
-              mergedConfig.createdByFieldEditable,
+            createField({
+              slug: x.slug,
+              name: mergedConfig.createdByFieldName,
+              label: mergedConfig.createdByLabel,
+              editable: mergedConfig.createdByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
-            createField(
-              x.slug,
-              mergedConfig.updatedByFieldName,
-              mergedConfig.updatedByLabel,
-              mergedConfig.updatedByFieldEditable,
+              pluginConfig: mergedConfig,
+            }),
+            createField({
+              slug: x.slug,
+              name: mergedConfig.updatedByFieldName,
+              label: mergedConfig.updatedByLabel,
+              editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
+              pluginConfig: mergedConfig,
+            }),
           ];
         });
     }
@@ -105,17 +105,23 @@ export const addAuthorFields =
     return config;
   };
 
-// TODO: Create typed args
-const createField = (
-  slug: string,
-  name: string,
-  label: PluginConfig['createdByLabel'] | PluginConfig['updatedByLabel'],
+const createField = ({
+  slug,
+  name,
+  label,
+  editable,
+  usersSlug,
+  pluginConfig,
+}: {
+  slug: string;
+  name: string;
+  label: PluginConfig['createdByLabel'] | PluginConfig['updatedByLabel'];
   editable:
     | PluginConfig['createdByFieldEditable']
-    | PluginConfig['updatedByFieldEditable'],
-  usersSlug: string,
-  pluginConfig: PluginConfig
-): Field => {
+    | PluginConfig['updatedByFieldEditable'];
+  usersSlug: string;
+  pluginConfig: PluginConfig;
+}): Field => {
   let fieldLabel: string | Record<string, string>;
   if ((label as Function).call) {
     fieldLabel = (label as Function).call({}, slug);
