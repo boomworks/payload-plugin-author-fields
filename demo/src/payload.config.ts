@@ -1,4 +1,4 @@
-import { Config, buildConfig } from 'payload/config';
+import { buildConfig } from 'payload/config';
 import { addAuthorFields } from '../../src/';
 import path from 'path';
 import Categories from './collections/Categories';

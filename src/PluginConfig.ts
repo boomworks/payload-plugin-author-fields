@@ -17,13 +17,13 @@ export interface PluginConfig {
   createdByLabel?:
     | string
     | Record<string, string>
-    | ((slug: string, defaultLabel: string) => string | Record<string, string>);
+    | ((slug: string) => string | Record<string, string>);
 
   /** Label for the updated by field, default: `Updated By` */
   updatedByLabel?:
     | string
     | Record<string, string>
-    | ((slug: string, defaultLabel: string) => string | Record<string, string>);
+    | ((slug: string) => string | Record<string, string>);
 
   /** Whether the created by field is editable, default: false */
   createdByFieldEditable?: boolean | ((slug: string) => boolean);

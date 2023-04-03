@@ -3,10 +3,7 @@ import { Field, FieldAccess, PayloadRequest } from 'payload/types';
 
 import { PluginConfig } from './PluginConfig';
 import { authorHook } from './authorHook';
-import {
-  DisplayOnlyField,
-  getDisplayOnlyField,
-} from './DisplayOnlyField/DisplayOnlyField';
+import { getDisplayOnlyField } from './DisplayOnlyField/DisplayOnlyField';
 
 const fieldReadAccess: FieldAccess = (args: { req: PayloadRequest }) =>
   Boolean(args.req.user);
