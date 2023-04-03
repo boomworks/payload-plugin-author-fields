@@ -11,8 +11,6 @@ import {
 
 import { PluginConfig } from '../PluginConfig';
 
-import './index.scss';
-
 type TextFieldWithProps = TextField & {
   path: string;
   label: string;
@@ -73,7 +71,7 @@ export const DisplayOnlyField: React.FC<
   }
 
   return (
-    <div className="display-only">
+    <div className="field-type relationship display-only">
       <Label label={label} />
       <div>{userValue}</div>
     </div>
