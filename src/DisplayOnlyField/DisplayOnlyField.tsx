@@ -49,15 +49,12 @@ export const DisplayOnlyField: React.FC<
   useEffect(() => {
     const relation = admin.user;
 
-    const response = fetch(
-      `${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`,
-      {
-        credentials: 'include',
-        headers: {
-          'Accept-Language': i18n.language,
-        },
-      }
-    )
+    fetch(`${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`, {
+      credentials: 'include',
+      headers: {
+        'Accept-Language': i18n.language,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.docs && data.docs.length > 0) {
@@ -77,7 +74,6 @@ export const DisplayOnlyField: React.FC<
 
   return (
     <div className="display-only">
-      {/* <div className="collection-edit__label">{label}</div> */}
       <Label label={label} />
       <div>{userValue}</div>
     </div>
