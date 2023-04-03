@@ -1,9 +1,9 @@
 # Development process
 
-Build plugin
+Watch for changes & rebuild
 
 ```sh
-npm run build
+npm start
 ```
 
 Link NPM package

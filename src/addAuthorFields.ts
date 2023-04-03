@@ -3,6 +3,7 @@ import { Field, FieldAccess, PayloadRequest } from 'payload/types';
 
 import { PluginConfig } from './PluginConfig';
 import { authorHook } from './authorHook';
+import { getDisplayOnlyField } from './DisplayOnlyField/DisplayOnlyField';
 
 const fieldReadAccess: FieldAccess = (args: { req: PayloadRequest }) =>
   Boolean(args.req.user);
@@ -12,6 +13,10 @@ const defaultConfig: Required<PluginConfig> = {
   excludedGlobals: [],
   createdByFieldName: 'createdBy',
   updatedByFieldName: 'updatedBy',
+  createdByLabel: 'Created By',
+  updatedByLabel: 'Updated By',
+  createdByFieldEditable: false,
+  updatedByFieldEditable: false,
   showInSidebar: true,
   fieldAccess: fieldReadAccess,
 };
@@ -43,16 +48,22 @@ export const addAuthorFields =
 
           x.fields = [
             ...x.fields,
-            createField(
-              mergedConfig.createdByFieldName,
+            createField({
+              slug: x.slug,
+              name: mergedConfig.createdByFieldName,
+              label: mergedConfig.createdByLabel,
+              editable: mergedConfig.createdByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
-            createField(
-              mergedConfig.updatedByFieldName,
+              pluginConfig: mergedConfig,
+            }),
+            createField({
+              slug: x.slug,
+              name: mergedConfig.updatedByFieldName,
+              label: mergedConfig.updatedByLabel,
+              editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
+              pluginConfig: mergedConfig,
+            }),
           ];
         });
     }
@@ -71,16 +82,22 @@ export const addAuthorFields =
 
           x.fields = [
             ...x.fields,
-            createField(
-              mergedConfig.createdByFieldName,
+            createField({
+              slug: x.slug,
+              name: mergedConfig.createdByFieldName,
+              label: mergedConfig.createdByLabel,
+              editable: mergedConfig.createdByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
-            createField(
-              mergedConfig.updatedByFieldName,
+              pluginConfig: mergedConfig,
+            }),
+            createField({
+              slug: x.slug,
+              name: mergedConfig.updatedByFieldName,
+              label: mergedConfig.updatedByLabel,
+              editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
-              mergedConfig
-            ),
+              pluginConfig: mergedConfig,
+            }),
           ];
         });
     }
@@ -88,13 +105,40 @@ export const addAuthorFields =
     return config;
   };
 
-const createField = (
-  name: string,
-  usersSlug: string,
-  pluginConfig: PluginConfig
-): Field => {
+const createField = ({
+  slug,
+  name,
+  label,
+  editable,
+  usersSlug,
+  pluginConfig,
+}: {
+  slug: string;
+  name: string;
+  label: PluginConfig['createdByLabel'] | PluginConfig['updatedByLabel'];
+  editable:
+    | PluginConfig['createdByFieldEditable']
+    | PluginConfig['updatedByFieldEditable'];
+  usersSlug: string;
+  pluginConfig: PluginConfig;
+}): Field => {
+  let fieldLabel: string | Record<string, string>;
+  if ((label as Function).call) {
+    fieldLabel = (label as Function).call({}, slug);
+  } else {
+    fieldLabel = label as string | Record<string, string>;
+  }
+
+  let isEditable: boolean;
+  if ((editable as Function).call) {
+    isEditable = (editable as Function).call({}, slug) as boolean;
+  } else {
+    isEditable = editable as boolean;
+  }
+
   return {
     name: name,
+    label: fieldLabel,
     type: 'relationship',
     relationTo: [usersSlug],
     defaultValue: (args: any) =>
@@ -106,8 +150,13 @@ const createField = (
         : undefined,
     admin: {
       hidden: pluginConfig.showInSidebar ? !pluginConfig.showInSidebar : false,
-      readOnly: true,
+      readOnly: !isEditable,
       position: 'sidebar',
+      components: {
+        Field: isEditable
+          ? undefined
+          : (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
+      },
     },
     access: {
       read: pluginConfig.fieldAccess,
