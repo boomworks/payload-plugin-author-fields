@@ -47,18 +47,23 @@ export const DisplayOnlyField: React.FC<
   useEffect(() => {
     const relation = admin.user;
 
-    fetch(`${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`, {
-      credentials: 'include',
-      headers: {
-        'Accept-Language': i18n.language,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.docs && data.docs.length > 0) {
-          setUser(data.docs[0]);
+    if (value !== undefined && value.value !== undefined) {
+      fetch(
+        `${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`,
+        {
+          credentials: 'include',
+          headers: {
+            'Accept-Language': i18n.language,
+          },
         }
-      });
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.docs && data.docs.length > 0) {
+            setUser(data.docs[0]);
+          }
+        });
+    }
   }, []);
 
   let userValue = '-';
