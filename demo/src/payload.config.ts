@@ -15,7 +15,7 @@ export default buildConfig({
   plugins: [
     addAuthorFields({
       // Exclude some collections
-      excludedCollections: ['users', 'tags'],
+      // excludedCollections: ['users', 'tags'],
 
       // The 'Created By' field should be editable for posts
       createdByFieldEditable: (slug: string) => slug === 'posts',
@@ -41,7 +41,7 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI
+    url: process.env.DATABASE_URI,
   }),
   editor: slateEditor({}),
   admin: {
