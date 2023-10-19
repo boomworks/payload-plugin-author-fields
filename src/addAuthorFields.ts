@@ -157,6 +157,7 @@ const createField = ({
           ? undefined
           : (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
       },
+      condition: () => window?.location.pathname !== '/admin/create-first-user',
     },
     access: {
       read: pluginConfig.fieldAccess,
