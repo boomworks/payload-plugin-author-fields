@@ -1,4 +1,7 @@
 import { buildConfig } from 'payload/config';
+import { webpackBundler } from '@payloadcms/bundler-webpack';
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { slateEditor } from '@payloadcms/richtext-slate';
 import { addAuthorFields } from '../../src/';
 import path from 'path';
 import Categories from './collections/Categories';
@@ -37,7 +40,12 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI
+  }),
+  editor: slateEditor({}),
   admin: {
+    bundler: webpackBundler(),
     user: Users.slug,
     webpack: (config) => {
       const newConfig = {
