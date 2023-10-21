@@ -15,6 +15,13 @@ const Users: CollectionConfig = {
       name: 'name',
       type: 'text',
     },
+    {
+      name: 'jobTitle',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
 };
 
