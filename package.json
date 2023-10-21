@@ -23,12 +23,12 @@
   },
   "homepage": "https://github.com/boomworks/payload-plugin-author-fields#readme",
   "peerDependencies": {
-    "payload": "^0.18.5 || ^1.0.0",
+    "payload": "^0.18.5 || ^1.0.0 || ^2.0.0",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.31",
-    "payload": "^2.0.10",
+    "payload": "^2.0.11",
     "react": "^18.0.0",
     "typescript": "^4.5.5"
   }
