@@ -75,6 +75,10 @@ export const DisplayOnlyField: React.FC<
     }
   }
 
+  if (!props.pluginConfig.showUndefinedValues && !userValue) {
+    return null;
+  }
+
   return (
     <div className="field-type relationship display-only">
       <Label label={label} />
