@@ -19,6 +19,7 @@ const defaultConfig: Required<PluginConfig> = {
   updatedByFieldEditable: false,
   showInSidebar: true,
   fieldAccess: fieldReadAccess,
+  showUndefinedValues: false,
 };
 
 export const addAuthorFields =
@@ -157,7 +158,9 @@ const createField = ({
           ? undefined
           : (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
       },
-      condition: () => typeof window !== 'undefined' && !window.location.pathname.includes('create-first-user'),
+      condition: () =>
+        typeof window !== 'undefined' &&
+        !window.location.pathname.includes('create-first-user'),
     },
     access: {
       read: pluginConfig.fieldAccess,
