@@ -39,4 +39,7 @@ export interface PluginConfig {
    * fieldAccess: ({ req: { user } }) => user.isAdmin
    */
   fieldAccess?: FieldAccess;
+
+  /** Show display field if value is undefined */
+  showUndefinedValues?: boolean;
 }
