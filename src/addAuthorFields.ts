@@ -55,6 +55,7 @@ export const addAuthorFields =
               label: mergedConfig.createdByLabel,
               editable: mergedConfig.createdByFieldEditable,
               usersSlug,
+              existingDefault: mergedConfig.createdByExistingDefault,
               pluginConfig: mergedConfig,
             }),
             createField({
@@ -63,6 +64,7 @@ export const addAuthorFields =
               label: mergedConfig.updatedByLabel,
               editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
+              existingDefault: mergedConfig.updatedByExistingDefault,
               pluginConfig: mergedConfig,
             }),
           ];
@@ -89,6 +91,7 @@ export const addAuthorFields =
               label: mergedConfig.createdByLabel,
               editable: mergedConfig.createdByFieldEditable,
               usersSlug,
+              existingDefault: mergedConfig.createdByExistingDefault,
               pluginConfig: mergedConfig,
             }),
             createField({
@@ -97,6 +100,7 @@ export const addAuthorFields =
               label: mergedConfig.updatedByLabel,
               editable: mergedConfig.updatedByFieldEditable,
               usersSlug,
+              existingDefault: mergedConfig.updatedByExistingDefault,
               pluginConfig: mergedConfig,
             }),
           ];
@@ -112,6 +116,7 @@ const createField = ({
   label,
   editable,
   usersSlug,
+  existingDefault,
   pluginConfig,
 }: {
   slug: string;
@@ -121,6 +126,7 @@ const createField = ({
     | PluginConfig['createdByFieldEditable']
     | PluginConfig['updatedByFieldEditable'];
   usersSlug: string;
+  existingDefault: 'current-user' | 'undefined' | 'choose';
   pluginConfig: PluginConfig;
 }): Field => {
   let fieldLabel: string | Record<string, string>;
@@ -137,18 +143,28 @@ const createField = ({
     isEditable = editable as boolean;
   }
 
+  existingDefault = existingDefault || 'undefined';
+  if (!isEditable) {
+    isEditable = existingDefault === 'choose';
+  }
+
   return {
     name: name,
     label: fieldLabel,
     type: 'relationship',
     relationTo: [usersSlug],
-    defaultValue: (args: any) =>
-      args.user
+    defaultValue: (args: any) => {
+      console.log(
+        `defaultValue ${name}:`,
+        args.user && existingDefault === 'current-user'
+      );
+      return args.user && existingDefault === 'current-user'
         ? {
             relationTo: usersSlug,
             value: args.user.id,
           }
-        : undefined,
+        : undefined;
+    },
     admin: {
       hidden: pluginConfig.showInSidebar ? !pluginConfig.showInSidebar : false,
       readOnly: !isEditable,
@@ -156,7 +172,8 @@ const createField = ({
       components: {
         Field: isEditable
           ? undefined
-          : (props: any) => getDisplayOnlyField({ ...props, pluginConfig }),
+          : (props: any) =>
+              getDisplayOnlyField({ ...props, pluginConfig, existingDefault }),
       },
       condition: () =>
         typeof window !== 'undefined' &&

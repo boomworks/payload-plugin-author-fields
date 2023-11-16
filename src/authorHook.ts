@@ -2,7 +2,8 @@ import { PayloadRequest } from 'payload/types';
 
 export const authorHook = (
   updatedByFieldName: string,
-  userSlug: string
+  userSlug: string,
+  existingDefault: 'current-user' | 'undefined' | 'choose'
 ): any => {
   return async (args: {
     data: any;

@@ -31,6 +31,12 @@ export interface PluginConfig {
   /** Whether the updated by field is editable, default: false */
   updatedByFieldEditable?: boolean | ((slug: string) => boolean);
 
+  /** Behaviour when editing existing document (with an undefined value, default: `current-user` */
+  createdByExistingDefault?: 'current-user' | 'undefined' | 'choose';
+
+  /** Behaviour when editing existing document with an undefined value, default: `current-user` */
+  updatedByExistingDefault?: 'current-user' | 'undefined' | 'choose';
+
   /** Show readonly created & updated by fields in sidebar, default: `true` */
   showInSidebar?: boolean;
 

@@ -31,6 +31,10 @@ export default buildConfig({
 
       // Internationalisation of labels is also supported
       updatedByLabel: { en: 'Updated By', es: 'Actualizado por' },
+
+      //
+      // createdByExistingDefault: 'undefined',
+      // updatedByExistingDefault: 'choose',
     }),
   ],
   collections: [Categories, Posts, Tags, Users, Media],

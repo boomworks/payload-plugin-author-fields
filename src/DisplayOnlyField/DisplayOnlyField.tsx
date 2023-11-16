@@ -47,6 +47,9 @@ export const DisplayOnlyField: React.FC<
   useEffect(() => {
     const relation = admin.user;
 
+    console.log('DisplayOnlyField');
+    console.log(user);
+
     if (value !== undefined && value.value !== undefined) {
       fetch(
         `${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`,
@@ -70,7 +73,7 @@ export const DisplayOnlyField: React.FC<
   if (user !== undefined) {
     const titleKey = collections.find((x) => x.slug === admin.user)?.admin
       .useAsTitle;
-    if (titleKey) {
+    if (titleKey && user[titleKey]) {
       userValue = user[titleKey];
     }
   }
@@ -88,5 +91,8 @@ export const DisplayOnlyField: React.FC<
 };
 
 export const getDisplayOnlyField = (props: any) => {
+  if (props.existingDefault === 'choose') {
+    return undefined;
+  }
   return <DisplayOnlyField {...props} />;
 };
