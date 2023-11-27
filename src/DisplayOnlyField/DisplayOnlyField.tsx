@@ -75,7 +75,7 @@ export const DisplayOnlyField: React.FC<
     }
   }
 
-  if (!props.pluginConfig.showUndefinedValues && !userValue) {
+  if (!props.pluginConfig.showInSidebar || (!props.pluginConfig.showUndefinedValues && !userValue)) {
     return null;
   }
 
