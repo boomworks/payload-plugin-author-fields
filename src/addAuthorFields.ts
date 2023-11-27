@@ -150,7 +150,7 @@ const createField = ({
           }
         : undefined,
     admin: {
-      hidden: pluginConfig.showInSidebar ? !pluginConfig.showInSidebar : false,
+      hidden: !pluginConfig.showInSidebar,
       readOnly: !isEditable,
       position: 'sidebar',
       components: {
