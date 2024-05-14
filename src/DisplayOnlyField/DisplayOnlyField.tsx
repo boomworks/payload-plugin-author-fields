@@ -48,20 +48,22 @@ export const DisplayOnlyField: React.FC<
     const relation = admin.user;
 
     if (value !== undefined && value.value !== undefined) {
-      fetch(
-        `${serverURL}${api}/${relation}?where[_id][equals]=${value.value}`,
-        {
-          credentials: 'include',
-          headers: {
-            'Accept-Language': i18n.language,
-          },
-        }
-      )
+      fetch(`${serverURL}${api}/${relation}/${value.value}`, {
+        credentials: 'include',
+        headers: {
+          'Accept-Language': i18n.language,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
-          if (data.docs && data.docs.length > 0) {
-            setUser(data.docs[0]);
+          if (data) {
+            setUser(data);
           }
+        })
+        .catch((e) => {
+          console.error(
+            `[payload-plugin-author-fields] Error fetching user with ID ${value.value}`
+          );
         });
     }
   }, []);
@@ -75,7 +77,10 @@ export const DisplayOnlyField: React.FC<
     }
   }
 
-  if (!props.pluginConfig.showInSidebar || (!props.pluginConfig.showUndefinedValues && !userValue)) {
+  if (
+    !props.pluginConfig.showInSidebar ||
+    (!props.pluginConfig.showUndefinedValues && !userValue)
+  ) {
     return null;
   }
 
