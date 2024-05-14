@@ -38,6 +38,12 @@ export const addAuthorFields =
     if (config.collections !== undefined) {
       config.collections
         .filter((x) => !mergedConfig.excludedCollections.includes(x.slug))
+        .filter(
+          (x) =>
+            !x.fields.find(
+              (x) => 'name' in x && x.name === mergedConfig.createdByFieldName
+            )
+        )
         .forEach((x) => {
           x.hooks = {
             ...x.hooks,
@@ -72,6 +78,12 @@ export const addAuthorFields =
     if (config.globals !== undefined) {
       config.globals
         .filter((x) => !mergedConfig.excludedGlobals.includes(x.slug))
+        .filter(
+          (x) =>
+            !x.fields.find(
+              (x) => 'name' in x && x.name === mergedConfig.createdByFieldName
+            )
+        )
         .forEach((x) => {
           x.hooks = {
             ...x.hooks,
