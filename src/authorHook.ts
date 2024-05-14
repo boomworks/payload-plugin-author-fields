@@ -12,7 +12,8 @@ export const authorHook = (
     if (
       args.operation === 'update' &&
       args.data !== undefined &&
-      args.req.user !== undefined
+      args.req.user !== undefined &&
+      args.req.user !== null
     ) {
       args.data[updatedByFieldName] = {
         relationTo: userSlug,
